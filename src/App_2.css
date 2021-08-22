@@ -1,68 +1,34 @@
-.rate-area {
-  float:left;
-  border-style: none;
+html{
+  background-color: darkgray;
+  color: #eee;
 }
 
-.rate-area:not(:checked) > input {
-  position:absolute;
-  top:-9999px;
-  clip:rect(0,0,0,0);
-}
-
-.rate-area:not(:checked) > label {
-  float: right;
-  width: .80em;
-  overflow: hidden;
-  white-space: nowrap;
-  cursor: pointer;
-  font-size: 40px;
-  line-height: 32px;
-  color: lightgrey;
-  margin-bottom: 10px !important;
-}
-
-.rate-area:not(:checked) > label:before {
-  content: '★';
-}
-
-.rate-area > input:checked ~ label {
-  color: #e8262d;
-  content: '★';
-  text-shadow: none;
-}
-
-.rate-area:not(:checked) > label:hover,
-.rate-area:not(:checked) > label:hover ~ label {
-  color: #e8262d;
-  
-}
-
-.rate-area > input:checked + label:hover,
-.rate-area > input:checked + label:hover ~ label,
-.rate-area > input:checked ~ label:hover,
-.rate-area > input:checked ~ label:hover ~ label,
-.rate-area > label:hover ~ input:checked ~ label {
-  color: #e8262d;
-  text-shadow: none;
-  
-}
-
-.rate-area > label:active {
-  position:relative;
-  top:0px;
-  left:0px; 
+.MuiRating-root{
+  color: green;
 }
 
 .machines{
   display: flex;
   flex-direction: column;
+  border: 2px solid #e06500;
+  margin-bottom: 1em;
 }
 
 textarea {
-	border: 2px solid #765942;
+	border: 2px solid darkblue;
 	border-radius: 10px;
-  width:90%;
-  max-width:90%;
+  width:100%;
+  max-width:99%;
   max-height:30%;
   resize:vertical;
 }
+
+.form-textfield{
+  background-color: darkgray;
+}
+
+.machines > * {
+  padding: 0.1em;
+  margin: 0.5em;
+}
+
