@@ -3,14 +3,14 @@ import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import RemoveIcon from '@material-ui/icons/Remove';
-import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/RemoveCircle';
+import AddIcon from '@material-ui/icons/AddCircle';
+import SendIcon from '@material-ui/icons/Send';
 import Icon from '@material-ui/core/Icon';
 import { v4 as uuidv4 } from 'uuid';
-import './App_2.css'
 import { makeStyles } from '@material-ui/core/styles';
 import ReactStars from "react-rating-stars-component";
-
+import './App_2.css'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +33,7 @@ function App() {
   ]);
 
   const [surround, setsurround] = useState([
-    { customer_companyname: '', customer_descript: '', need_sales: '', usageYear: '', customer_contact_name: '', customer_contact_mail: '' , customer_contact_phone: ''},
+    { customer_companyname: '', customer_descript: '', need_sales: '',  customer_contact_name: '', customer_contact_mail: '' , customer_contact_phone: ''},
   ]);
 
   const handleSubmit = (e) => {
@@ -104,7 +104,6 @@ function App() {
   }
 
   const handleAddFieldsMedias = () => {
-    let state = uuidv4()
     setmedias([...medias, { id: uuidv4(), brand: '', type: '', usageYear: '', satisfaction: 0, discription: '' }])
   }
 
@@ -131,6 +130,7 @@ function App() {
       <h1>Kunden Check</h1>
       <form className={classes.root} onSubmit={handleSubmit}> {/* onSubmit={handleSubmit}, action="https://httpbin.org/post" method="post" */}
       <h2>Kundenangaben</h2>
+      <div className="customer">
       <TextField
                 name="customer_companyname"
                 label="Kunde"
@@ -139,10 +139,20 @@ function App() {
                 value={surround.customer_companyname}
                 onChange={event => handleChangeSurround(event)}
               />
+        <TextField
+                name="customer_descript"
+                label="Standortbeschreibung"
+                variant="filled"
+                className="from-textfield"
+                value={surround.customer_descript}
+                onChange={event => handleChangeSurround(event)}
+              />
+</div>
+
         <h2>Anlagen</h2>
         {machines.map(machines => (
           <div className="machines" key={machines.id}>
-            <label>Anlagenart</label> <select className="form-control" name="style" onChange={event => handleChangeInputMachine(machines.id, event)}>
+            <label className="form-group">Anlagenart <select className="form-control" name="style" onChange={event => handleChangeInputMachine(machines.id, event)}>
               <option value="unknown">
                 Bitte Wählen
               </option>
@@ -152,7 +162,7 @@ function App() {
               <option value="blasting">
                 Strahlen
               </option>
-            </select>
+            </select></label>
             <TextField
               name="brand"
               label="Hersteller"
@@ -170,7 +180,7 @@ function App() {
               value={machines.type}
               onChange={event => handleChangeInputMachine(machines.id, event)}
             />
-            <div>
+            <div className="form-rate">
               <label>Zustand
               <ReactStars
                 count={5}
@@ -184,7 +194,7 @@ function App() {
               /></label>
             </div>
             <div className="form-group">
-              <label>Analge erneuerungsbedürftig?</label> <select className="form-control" name="updateNeeded" onChange={event => handleChangeInputMachine(machines.id, event)}>
+              <label>Analge erneuerungsbedürftig? <select className="form-control" name="updateNeeded" onChange={event => handleChangeInputMachine(machines.id, event)}>
                 <option value="unknown">
                   Bitte Wählen
                 </option>
@@ -196,10 +206,10 @@ function App() {
                 <option value="yes">
                   Ja
                 </option>
-              </select>
+              </select></label> 
             </div>
             <div className="form-group">
-              <label>Interesse an Retrofit? <i>Karte abgegeben?</i></label> <select className="form-control" name="retrofit" onChange={event => handleChangeInputMachine(machines.id, event)}>
+              <label>Interesse an Retrofit? <i>Karte abgegeben?</i> <select className="form-control" name="retrofit" onChange={event => handleChangeInputMachine(machines.id, event)}>
                 <option value="unknown">
                   Bitte Wählen
                 </option>
@@ -211,11 +221,11 @@ function App() {
                 <option value="yes">
                   Ja
                 </option>
-              </select>
+              </select></label>
             </div>
 
             <div className="form-group">
-              <label>Interesse an TuneUp? <i>Karte abgegeben?</i></label> <select className="form-control" name="tuneup" onChange={event => handleChangeInputMachine(machines.id, event)}>
+              <label>Interesse an TuneUp? <i>Karte abgegeben?</i> <select className="form-control" name="tuneup" onChange={event => handleChangeInputMachine(machines.id, event)}>
                 <option value="unknown">
                   Bitte Wählen
                 </option>
@@ -227,7 +237,7 @@ function App() {
                 <option value="yes">
                   Ja
                 </option>
-              </select>
+              </select></label>
             </div>
             <TextField
               name="investment"
@@ -255,13 +265,19 @@ function App() {
         >
           <AddIcon />
         </IconButton>
-        <div class="form-group">
-          <h2>Verbrauchsmittel</h2>
 
+
+
+        <div>
+          <h2>Verbrauchsmittel</h2>
 
           <div className="media">
 
-            <label>Fremdprodukt(e)</label> <select class="form-control" name="selectbox_otherProducts">
+            <label>Fremdprodukt(e) <select className="form-control" name="selectbox_otherProducts" onChange={event => handleChangeInputMedia(medias.id, event)}>
+              <option value="unknown">
+                Bitte Wählen
+              </option>
+
               <option value="no">
                 Nein
               </option>
@@ -269,11 +285,11 @@ function App() {
               <option value="yes">
                 Ja
               </option>
-            </select>
+            </select></label>
           </div>
 
           {medias.map(medias => (
-            <div className="machines" key={medias.id}>
+            <div className="medias" key={medias.id}>
               <TextField
                 name="brand"
                 label="Hersteller"
@@ -299,7 +315,7 @@ function App() {
                 value={medias.usageYear}
                 onChange={event => handleChangeInputMedia(medias.id, event)}
               />
-              <label>Zufriedenheit
+              <label className="form-rate">Zufriedenheit
               <ReactStars
                   count={5}
                   onChange={event => handleChangeStarMedia(medias.id, event)}
@@ -320,12 +336,6 @@ function App() {
                   onChange={event => handleChangeInputMedia(medias.id, event)} />
               </label>
 
-
-
-
-
-
-
               <IconButton disabled={medias.length === 1} onClick={() => handleRemoveFieldsMedias(medias.id)}>
                 <RemoveIcon />
               </IconButton>
@@ -339,12 +349,53 @@ function App() {
           </IconButton>
 
         </div>
+        <div>
+            <h2>Verkauf</h2>
+<div className="sales">
+<label className="form-group">Kunde wünscht Kontaktaufnahme<select className="form-control" name="need_sales"  onChange={event => handleChangeSurround( event)}>
+              <option value="unknown">
+                Bitte Wählen
+              </option>
+              <option value="no">
+                Nein
+              </option>
+
+              <option value="yes">
+                Ja
+              </option>
+            </select></label> 
+            <TextField
+                name="customer_contact_name"
+                label="Kontaktperson"
+                variant="filled"
+                className="from-textfield"
+                value={surround.customer_contact_name}
+                onChange={event => handleChangeSurround(event)}
+              />
+              <TextField
+                name="customer_contact_mail"
+                label="Mail"
+                variant="filled"
+                className="from-textfield"
+                value={surround.customer_contact_mail}
+                onChange={event => handleChangeSurround(event)}
+              />
+              <TextField
+                name="customer_contact_phone"
+                label="Phone"
+                variant="filled"
+                className="from-textfield"
+                value={surround.customer_contact_phone}
+                onChange={event => handleChangeSurround(event)}
+              />
+</div>
+        </div>
         <Button
           className={classes.button}
           variant="contained"
           color="primary"
           type="submit"
-          endIcon={<Icon>send</Icon>}
+          endIcon={<SendIcon/>}
           onClick={handleSubmit}
         >Send</Button>
       </form>{/* onClick={handleSubmit}, value="send"  */}

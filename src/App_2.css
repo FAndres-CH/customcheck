@@ -7,19 +7,20 @@ html{
   color: green;
 }
 
-.machines{
+.machines, .medias, .sales, .customer{
   display: flex;
   flex-direction: column;
   border: 2px solid #999999;
   border: 2px solid #e06500;
+  margin: 0;
   margin-bottom: 1em;
 }
 
 textarea {
 	border: 2px solid darkblue;
 	border-radius: 10px;
-  width:100%;
-  max-width:99%;
+  width: 93%;
+  max-width:93%;
   max-height:30%;
   resize:vertical;
 }
@@ -28,8 +29,13 @@ textarea {
   background-color: darkgray;
 }
 
-.machines > * {
+.form-group, .form-rate, textarea {
   padding: 0.1em;
-  margin: 0.5em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.media{
+  margin:0.6em;
 }
 
