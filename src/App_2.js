@@ -6,11 +6,11 @@ import IconButton from '@material-ui/core/IconButton';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import Icon from '@material-ui/core/Icon';
-import Rating from '@material-ui/lab/Rating';
 import { v4 as uuidv4 } from 'uuid';
 import './App_2.css'
 import { makeStyles } from '@material-ui/core/styles';
-import StarRatings from './react-star-ratings';
+import ReactStars from "react-rating-stars-component";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,6 +32,10 @@ function App() {
     { id: uuidv4(), brand: '', type: '', usageYear: '', satisfaction: 0, discription: '' },
   ]);
 
+  const [surround, setsurround] = useState([
+    { customer_companyname: '', customer_descript: '', need_sales: '', usageYear: '', customer_contact_name: '', customer_contact_mail: '' , customer_contact_phone: ''},
+  ]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Machines", machines);
@@ -51,6 +55,30 @@ function App() {
     setmachines(newMachines);
   }
 
+  const handleChangeStarMachine = (id, event) => {
+    console.log(event)
+    const newMachines = machines.map(i => {
+      if (id === i.id) {
+        console.log(event.target)
+        i['state'] = event
+      }
+      return i;
+    })
+
+    setmachines(newMachines);
+  }
+
+  const handleChangeStarMedia = (id, event) => {
+    const newMedia = medias.map(i => {
+      if (id === i.id) {
+        i['satisfaction'] = event
+      }
+      return i;
+    })
+
+    setmedias(newMedia);
+  }
+
   const handleChangeInputMedia = (id, event) => {
     const newMedia = medias.map(i => {
       if (id === i.id) {
@@ -60,6 +88,15 @@ function App() {
     })
 
     setmedias(newMedia);
+  }
+
+  const handleChangeSurround = (event) => {
+    const newSurround = surround.map(i => {
+        i[event.target.name] = event.target.value
+      return i;
+    })
+
+    setsurround(newSurround);
   }
 
   const handleAddFieldsMachines = () => {
@@ -93,6 +130,15 @@ function App() {
     <Container>
       <h1>Kunden Check</h1>
       <form className={classes.root} onSubmit={handleSubmit}> {/* onSubmit={handleSubmit}, action="https://httpbin.org/post" method="post" */}
+      <h2>Kundenangaben</h2>
+      <TextField
+                name="customer_companyname"
+                label="Kunde"
+                variant="filled"
+                className="from-textfield"
+                value={surround.customer_companyname}
+                onChange={event => handleChangeSurround(event)}
+              />
         <h2>Anlagen</h2>
         {machines.map(machines => (
           <div className="machines" key={machines.id}>
@@ -126,12 +172,16 @@ function App() {
             />
             <div>
               <label>Zustand
-                <Rating
-                  name={('statee')/*'state' + machines.id).replace(/-/g, '').replace(/[0-9]/g, '').substring(0,6)*/}
-                  value={machines.state}
-                  precision={0.5}
-                  onChange={event => handleChangeInputMachine(machines.id, event)}
-                /></label>
+              <ReactStars
+                count={5}
+                onChange={event => handleChangeStarMachine(machines.id, event)}
+                size={24}
+                isHalf={true}
+                emptyIcon={<i className="far fa-star"></i>}
+                halfIcon={<i className="fa fa-star-half-alt"></i>}
+                fullIcon={<i className="fa fa-star"></i>}
+                activeColor="#ffab2e"
+              /></label>
             </div>
             <div className="form-group">
               <label>Analge erneuerungsbedürftig?</label> <select className="form-control" name="updateNeeded" onChange={event => handleChangeInputMachine(machines.id, event)}>
@@ -250,11 +300,16 @@ function App() {
                 onChange={event => handleChangeInputMedia(medias.id, event)}
               />
               <label>Zufriedenheit
-                <Rating
-                  name="satisfaction"
-                  value={medias.satisfaction}
-                  precision={0.5}
-                  onChange={event => handleChangeInputMedia(medias.id, event)}
+              <ReactStars
+                  count={5}
+                  onChange={event => handleChangeStarMedia(medias.id, event)}
+                  size={24}
+                  isHalf={true}
+                  emptyIcon={<i className="far fa-star"></i>}
+                  halfIcon={<i className="fa fa-star-half-alt"></i>}
+                  fullIcon={<i className="fa fa-star"></i>}
+                  activeColor="#ffab2e"
+                  color="#999999"
                 /></label>
               <label>
                 <textarea name="discription"
