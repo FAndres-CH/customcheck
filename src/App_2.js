@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { makeStyles } from '@material-ui/core/styles';
 import ReactStars from "react-rating-stars-component";
 import './App_2.css'
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,8 +39,23 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Machines", machines);
-    console.log("Medias", medias);
+    console.log("Medias", JSON.stringify(medias));
+    const data =  JSON.stringify({surround: surround, machines: machines, medias: medias});
+    console.log(data)
+    const data1 = { "name" : "Mike" };
+    const api = 'https://uyuurxttnf.execute-api.eu-west-1.amazonaws.com/Prod';
+    axios.post(api , data)
+      .then(res => {
+      console.log(res);
+      console.log(res.data);
+    }).catch((error) => {
+      console.log(error);
+    });
+
+  
   };
+
+  
 
 
   const handleChangeInputMachine = (id, event) => {
